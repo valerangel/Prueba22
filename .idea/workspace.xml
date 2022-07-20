@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c52120b1-1b43-4b11-aa6f-ce110ef8a35c" name="Changes" comment="asdf">
-      <change afterPath="$PROJECT_DIR$/src/Map/Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Map/Map.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Map/TypeOfCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pjs/Melee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pjs/MeleeLevels.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pjs/Players.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pjs/Unit.java" afterDir="false" />
+    <list default="true" id="c52120b1-1b43-4b11-aa6f-ce110ef8a35c" name="Changes" comment="Primeras impresiones">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Pjs/RangeLevels.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Pjs/Ranged.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pjs/Melee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pjs/Melee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pjs/MeleeLevels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pjs/MeleeLevels.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pjs/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pjs/Unit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -46,6 +47,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -75,7 +77,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1658260546046</updated>
-      <workItem from="1658260547451" duration="9404000" />
+      <workItem from="1658260547451" duration="9508000" />
+      <workItem from="1658306941264" duration="4704000" />
     </task>
     <task id="LOCAL-00001" summary="asdf">
       <created>1658260642789</created>
@@ -84,7 +87,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658260642789</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Primeras impresiones">
+      <created>1658270435329</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1658270435329</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,17 +113,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="asdf" />
-    <option name="LAST_COMMIT_MESSAGE" value="asdf" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Pjs/Melee.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Primeras impresiones" />
+    <option name="LAST_COMMIT_MESSAGE" value="Primeras impresiones" />
   </component>
 </project>

@@ -6,10 +6,13 @@ import java.util.ArrayList;
 
 public class Map {
 
+    private final int WIDTH = 6;
+    private final int HEIGHT = 6;
+
     private Cell[][] cells;
 
     public Map() {
-        cells = new Cell[6][4];
+        cells = new Cell[WIDTH][HEIGHT];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 cells[i][j] = new Cell(null);
@@ -71,4 +74,19 @@ public class Map {
         this.cells[x][y] = new Cell(null);
     }
 
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public boolean thereIsUnit(int x,int y){
+        return this.cells[x][y].getTypeOfCell() == TypeOfCell.WITH_UNIT;
+    }
+
+    public Unit getUnit(int x, int y){
+        return this.cells[x][y].getUnit();
+    }
 }

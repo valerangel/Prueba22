@@ -3,9 +3,11 @@ import Map.*;
 
 import java.util.ArrayList;
 
-public class Melee extends Unit{
+public class Ranged extends Unit{
 
-    public Melee(MeleeLevels level, Players player) {
+    private final int rangeOfAttack = 3;
+
+    public Ranged(RangeLevels level, Players player) {
         super(level.getLevel(),level.getLife(), level.getDamage(), level.getSpeed(), player);
 
     }
@@ -13,7 +15,7 @@ public class Melee extends Unit{
     @Override
     public void action() {
         ArrayList<Cell> enemies = this.map.getEnemyPositions(super.player.getNum());
-        if(enemyIsAround(enemies)){
+        if(enemyAtDistance2(enemies)){
             attack(enemies);
             return;
         }
@@ -21,11 +23,10 @@ public class Melee extends Unit{
     }
 
 
-
-    private boolean enemyIsAround(ArrayList<Cell> enemies){
+    private boolean enemyAtDistance2(ArrayList<Cell> enemies){
         for (int i = 0; i < enemies.size(); i++) {
-            if(Math.abs(enemies.get(i).getUnit().getX() - super.x) <= 1
-                && Math.abs(enemies.get(i).getUnit().getY() - super.y) <= 1 ){
+            if(Math.abs(enemies.get(i).getUnit().getX() - super.x) <= rangeOfAttack
+                    && Math.abs(enemies.get(i).getUnit().getY() - super.y) <= rangeOfAttack ){
                 return true;
             }
         }
@@ -33,17 +34,16 @@ public class Melee extends Unit{
     }
 
     private void attack(ArrayList<Cell> enemies){
-        for (int i = 0; i < enemies.size() ; i++) {
-            if(Math.abs(enemies.get(i).getUnit().getX() - super.x) <= 1
-                    && Math.abs(enemies.get(i).getUnit().getY() - super.y) <= 1 ){
-                enemies.get(i).getUnit().dealDamage(super.damage);
-                return;
+        for (int j = 1; j < rangeOfAttack+1; j++) {
+            for (int i = 0; i < enemies.size() ; i++) {
+                if(Math.abs(enemies.get(i).getUnit().getX() - super.x) <= j
+                        && Math.abs(enemies.get(i).getUnit().getY() - super.y) <= j ){
+                    enemies.get(i).getUnit().dealDamage(super.damage);
+                    return;
+                }
             }
         }
     }
-
-
-
 
     public void lookForMovement(ArrayList<Cell> enemies){
         //We look for the nearest enemy
@@ -51,7 +51,7 @@ public class Melee extends Unit{
         int enemyNumber=0;
         for (int i = 0; i < enemies.size() ; i++) {
             int distance = Math.min(Math.abs(enemies.get(i).getUnit().getX() - super.x),
-                                    Math.abs(enemies.get(i).getUnit().getY() - super.y));
+                    Math.abs(enemies.get(i).getUnit().getY() - super.y));
             if(distance < minimumDistance){
                 minimumDistance = distance;
                 enemyNumber = i;
