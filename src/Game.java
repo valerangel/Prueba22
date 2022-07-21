@@ -13,15 +13,27 @@ public class Game {
 
         this.map = new Map();
 
-        Melee melee1 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
-        Ranged range2 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER2);
+        Melee melee11 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
+        Melee melee12 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
+        Melee melee13 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
+        Ranged range11 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER1);
+        Ranged range12 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER1);
+        Ranged range13 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER1);
+        Melee melee21 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER2);
+        Melee melee22 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER2);
+        Ranged range21 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER2);
 
-        map.setUnit(melee1, 0, 1);
-        map.setUnit(range2, 3, 3);
+        //map.setUnit(melee1, 1,1);
+        map.setUnit(melee11, 0, 2);
+        map.setUnit(melee12, 1, 2);
+        map.setUnit(melee13, 1, 5);
+        map.setUnit(melee21, 2, 3);
+        map.setUnit(melee22, 2, 2);
+        map.setUnit(range21, 4, 0);
 
         this.unitsInOrderOfActions = getUnitsInOrderOfActions();
 
-        beginGame(melee1, range2);
+        beginGame();
 
 
     }
@@ -77,7 +89,7 @@ public class Game {
         return false;
     }
 
-    private void beginGame(Unit unit1, Unit unit2) {
+    private void beginGame() {
 
         this.map.checkMap();
         showLifes();

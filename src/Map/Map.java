@@ -33,13 +33,13 @@ public class Map {
             for (int j = 0; j < cells[0].length; j++) {
 
                 if (cells[i][j].getTypeOfCell() == TypeOfCell.EMPTYCELL) {
-                    System.out.print(".");
+                    System.out.print(". ");
                 }
                 if (cells[i][j].getTypeOfCell() == TypeOfCell.WITH_UNIT) {
                     if (cells[i][j].getUnit().getPlayer() == Players.PLAYER1) {
-                        System.out.print("1");
+                        System.out.print("1 ");
                     } else {
-                        System.out.print("2");
+                        System.out.print("2 ");
                     }
                 }
             }
