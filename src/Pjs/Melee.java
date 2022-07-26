@@ -10,4 +10,8 @@ public class Melee extends Unit{
 
     }
 
+    public String getType(){
+        return "M";
+    }
+
 }

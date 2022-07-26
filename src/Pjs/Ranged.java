@@ -10,5 +10,8 @@ public class Ranged extends Unit{
 
     }
 
+    public String getType(){
+        return "R";
+    }
 
 }

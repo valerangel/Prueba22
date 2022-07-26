@@ -20,6 +20,18 @@ public class Cell {
         return this.typeOfCell;
     }
 
+    public void setUnit(Unit unit){
+        if(unit == null){
+            this.typeOfCell = TypeOfCell.EMPTYCELL;
+            this.unit= null;
+            return;
+        }
+
+        this.typeOfCell = TypeOfCell.WITH_UNIT;
+        this.unit=unit;
+    }
+
+
     public Unit getUnit(){
         return this.unit;
     }

@@ -75,24 +75,25 @@ public abstract class Unit {
     }
 
 
-
     public void action() {
-        if(!this.isAlive) return;
+        if (!this.isAlive) {//Check if unit is alive
+            return;
+        }
 
         ArrayList<Cell> enemies = this.map.getEnemyPositions(player.getNum());
-        if(enemyAtAttackDistance(enemies)){
+        if (enemyAtAttackDistance(enemies)) {
             attackNearest(enemies);
             return;
         }
         lookForMovement(enemies);
     }
 
-    private void attackNearest(ArrayList<Cell> enemies){
-        for (int distance = 1; distance < rangeOfAttack+1; distance++) { //We search from nearest distance to the furthest.
+    private void attackNearest(ArrayList<Cell> enemies) {
+        for (int distance = 1; distance < rangeOfAttack + 1; distance++) { //We search from the nearest distance to the furthest.
 
-            for (int i = 0; i < enemies.size() ; i++) { //We search if there is an enemy at the distance given.
-                if(distanceToUnit(enemies.get(i).getUnit())<= distance){
-                    enemies.get(i).getUnit().dealDamage(this.damage);
+            for (Cell enemy : enemies) { //We search if there is an enemy at the distance given.
+                if (distanceToUnit(enemy.getUnit()) <= distance) {
+                    enemy.getUnit().dealDamage(this.damage);
                     return;
                 }
             }
@@ -100,11 +101,11 @@ public abstract class Unit {
         }
     }
 
-    private boolean enemyAtAttackDistance(ArrayList<Cell> enemies){
+    private boolean enemyAtAttackDistance(ArrayList<Cell> enemies) {
         if (enemies.isEmpty()) return false;
 
-        for (int i = 0; i < enemies.size(); i++) {
-            if(distanceToUnit(enemies.get(i).getUnit())<= rangeOfAttack){
+        for (Cell enemy : enemies) {
+            if (distanceToUnit(enemy.getUnit()) <= rangeOfAttack) {
                 return true;
             }
         }
@@ -113,15 +114,15 @@ public abstract class Unit {
     }
 
 
-    public void lookForMovement(ArrayList<Cell> enemies){
+    public void lookForMovement(ArrayList<Cell> enemies) {
         if (enemies.isEmpty()) return;
 
         //We look for the nearest enemy
         int minimumDistance = 100;
-        int enemyNumber=0;
-        for (int i = 0; i < enemies.size() ; i++) {
+        int enemyNumber = 0;
+        for (int i = 0; i < enemies.size(); i++) {
             int distance = distanceToUnit(enemies.get(i).getUnit());
-            if(distance < minimumDistance){
+            if (distance < minimumDistance) {
                 minimumDistance = distance;
                 enemyNumber = i;
             }
@@ -130,48 +131,79 @@ public abstract class Unit {
         moveToEnemy(enemies.get(enemyNumber));
     }
 
-    private void moveToEnemy(Cell enemy){
+    private void moveToEnemy(Cell enemy) {
         int newX = this.x;
         int newY = this.y;
 
         int enemyX = enemy.getUnit().getX();
         int enemyY = enemy.getUnit().getY();
 
-        if(x < enemyX){
+        if (x < enemyX) {
             newX++;
         }
-        if(x > enemyX){
+        if (x > enemyX) {
             newX--;
         }
-        if(y < enemyY){
+        if (y < enemyY) {
             newY++;
         }
-        if(y > enemyY){
+        if (y > enemyY) {
             newY--;
         }
 
-        if(!this.map.thereIsUnit(newX, newY)){
-            moveTo(newX, newY);
+        if (!this.map.thereIsUnit(newX, newY)) {
+            map.moveUnit(this, x, y, newX, newY);
             return;
         }
 
-        if(!this.map.thereIsUnit(x, newY)){
-            moveTo(x, newY);
+        if (!this.map.thereIsUnit(x, newY)) {
+            map.moveUnit(this, x, y, x, newY);
             return;
         }
 
-        if(!this.map.thereIsUnit(newX, y)){
-            moveTo(newX, y);
+        if (!this.map.thereIsUnit(newX, y)) {
+            map.moveUnit(this, x, y, newX, y);
             return;
         }
 
+        if (!this.map.thereIsUnit(newX, y + 1)) {
+            if (this.map.thereIsCell(newX, y + 1)) {
+                moveTo(newX, y + 1);
+                return;
+            }
+        }
+
+        if (!this.map.thereIsUnit(newX, y - 1)) {
+            if (this.map.thereIsCell(newX, y - 1)) {
+                map.moveUnit(this, x, y, newX, y - 1);
+                return;
+            }
+        }
+
+        if (!this.map.thereIsUnit(x + 1, newY)) {
+            if (this.map.thereIsCell(x + 1, newY)) {
+                map.moveUnit(this, x, y, x + 1, newY);
+                return;
+            }
+        }
+        if (!this.map.thereIsUnit(x - 1, newY)) {
+            if (this.map.thereIsCell(x - 1, newY)) {
+                map.moveUnit(this, x, y, x - 1, newY);
+                return;
+            }
+        }
 
     }
 
-    private void moveTo(int newX, int newY){
-        this.map.removeUnit(x,y);
+    private void moveTo(int newX, int newY) {
+        this.map.removeUnit(x, y);
         this.map.setUnit(this, newX, newY);
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public abstract String getType();
 
 }

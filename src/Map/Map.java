@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Map {
 
     private final int WIDTH = 6;
-    private final int HEIGHT = 6;
+    private final int HEIGHT = 8;
 
     private Cell[][] cells;
 
@@ -22,21 +22,22 @@ public class Map {
     }
 
     public void setUnit(Unit unit, int x, int y) {
-        cells[x][y] = new Cell(unit);
+        cells[x][y].setUnit(unit);
         unit.setMap(this, x, y);
     }
 
     public void checkMap() {
         System.out.println("\nChecking the map:");
 
-        for (int i = 0; i < cells.length; i++) {
+        for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
 
-                if (cells[i][j].getTypeOfCell() == TypeOfCell.EMPTYCELL) {
-                    System.out.print(". ");
+                if (cell[j].getTypeOfCell() == TypeOfCell.EMPTYCELL) {
+                    System.out.print(" . ");
                 }
-                if (cells[i][j].getTypeOfCell() == TypeOfCell.WITH_UNIT) {
-                    if (cells[i][j].getUnit().getPlayer() == Players.PLAYER1) {
+                if (cell[j].getTypeOfCell() == TypeOfCell.WITH_UNIT) {
+                    System.out.print(cell[j].getUnit().getType());
+                    if (cell[j].getUnit().getPlayer() == Players.PLAYER1) {
                         System.out.print("1 ");
                     } else {
                         System.out.print("2 ");
@@ -57,11 +58,13 @@ public class Map {
             enemyPlayer = Players.PLAYER1;
         }
 
-        for (int i = 0; i < cells.length; i++) {
+        for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
-                if (cells[i][j].getTypeOfCell() == TypeOfCell.WITH_UNIT) {
-                    if (cells[i][j].getUnit().getPlayer() == enemyPlayer)
-                        enemies.add(cells[i][j]);
+                if (cell[j].getTypeOfCell() == TypeOfCell.WITH_UNIT) {
+                    if (cell[j].getUnit().isAlive()) {
+                        if (cell[j].getUnit().getPlayer() == enemyPlayer)
+                            enemies.add(cell[j]);
+                    }
                 }
             }
 
@@ -70,8 +73,13 @@ public class Map {
         return enemies;
     }
 
+    public void moveUnit(Unit unit, int x, int y, int newX, int newY){
+        this.removeUnit(x,y);
+        this.setUnit(unit, newX, newY);
+    }
+
     public void removeUnit(int x, int y) {
-        this.cells[x][y] = new Cell(null);
+        cells[x][y].setUnit(null);
     }
 
     public int getHEIGHT() {
@@ -83,7 +91,18 @@ public class Map {
     }
 
     public boolean thereIsUnit(int x,int y){
-        return this.cells[x][y].getTypeOfCell() == TypeOfCell.WITH_UNIT;
+        if(thereIsCell(x,y)) {
+            return this.cells[x][y].getTypeOfCell() == TypeOfCell.WITH_UNIT;
+        }
+
+        return false;
+    }
+
+    public boolean thereIsCell(int x, int y){
+        if(x >=0 && x< WIDTH && y >=0 && y < HEIGHT) {
+            return true;
+        }
+        return false;
     }
 
     public Unit getUnit(int x, int y){

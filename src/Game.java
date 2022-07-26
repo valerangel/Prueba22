@@ -4,11 +4,12 @@ import Pjs.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Game {
 
-    private Map map;
-    private ArrayList<Unit> unitsInOrderOfActions;
+    private final Map map;
+    private final ArrayList<Unit> unitsInOrderOfActions;
     public Game() {
 
         this.map = new Map();
@@ -16,20 +17,24 @@ public class Game {
         Melee melee11 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
         Melee melee12 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
         Melee melee13 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER1);
+
+        Assassin assassin11 = new Assassin(AssassinLevels.LEVEL1, Players.PLAYER1);
+
         Ranged range11 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER1);
         Ranged range12 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER1);
         Ranged range13 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER1);
+
         Melee melee21 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER2);
         Melee melee22 = new Melee(MeleeLevels.LEVEL1, Players.PLAYER2);
         Ranged range21 = new Ranged(RangeLevels.LEVEL1, Players.PLAYER2);
 
         //map.setUnit(melee1, 1,1);
-        map.setUnit(melee11, 0, 2);
+        map.setUnit(assassin11, 0, 2);
         map.setUnit(melee12, 1, 2);
         map.setUnit(melee13, 1, 5);
         map.setUnit(melee21, 2, 3);
         map.setUnit(melee22, 2, 2);
-        map.setUnit(range21, 4, 0);
+        map.setUnit(range21, 4, 3);
 
         this.unitsInOrderOfActions = getUnitsInOrderOfActions();
 
@@ -39,7 +44,7 @@ public class Game {
     }
 
     private ArrayList<Unit> getUnitsInOrderOfActions() {
-        ArrayList<Unit> allUnits = new ArrayList<Unit>();
+        ArrayList<Unit> allUnits = new ArrayList<>();
         for (int i = 0; i < this.map.getWIDTH(); i++) {
             for (int j = 0; j < this.map.getHEIGHT(); j++) {
                 if (this.map.thereIsUnit(i, j)) {
@@ -48,23 +53,9 @@ public class Game {
             }
         }
 
-        ArrayList<Double> speeds = new ArrayList<Double>();
-        for (int i = 0; i < allUnits.size(); i++) {
-            speeds.add(allUnits.get(i).getSpeed());
-        }
+        allUnits.sort(Comparator.comparingDouble(Unit::getSpeed).reversed());
 
-        Collections.sort(speeds, Collections.reverseOrder());
-
-        ArrayList<Unit> allUnitsOrdered = new ArrayList<Unit>();
-        for (int i = 0; i < speeds.size(); i++) {
-            for (int j = 0; j < allUnits.size(); j++) {
-                if (allUnits.get(j).getSpeed() == speeds.get(i)) {
-                    allUnitsOrdered.add(allUnits.get(j));
-                }
-            }
-        }
-
-        return allUnitsOrdered;
+        return allUnits;
     }
 
 
@@ -94,23 +85,26 @@ public class Game {
         this.map.checkMap();
         showLifes();
 
-        while (thereIsUnitsAlifeForBothPlayers()) {
+        int loopCounter=0;
 
-            for (int i = 0; i < this.unitsInOrderOfActions.size(); i++) {
-                unitsInOrderOfActions.get(i).action();
+        while (thereIsUnitsAlifeForBothPlayers() && loopCounter<10) {
+
+            for (Unit unitsInOrderOfAction : this.unitsInOrderOfActions) {
+                unitsInOrderOfAction.action();
             }
             this.map.checkMap();
             showLifes();
 
+            loopCounter++;
         }
 
         System.out.println("El game ha terminado");
     }
 
     private void showLifes(){
-        for (int i = 0; i < this.unitsInOrderOfActions.size(); i++) {
-            System.out.println("La unidad del jugador "+ unitsInOrderOfActions.get(i).getPlayer().getNum()
-            + " tiene " + unitsInOrderOfActions.get(i).getLife() + "  vida");
+        for (Unit unitsInOrderOfAction : this.unitsInOrderOfActions) {
+            System.out.println("La unidad del jugador " + unitsInOrderOfAction.getPlayer().getNum()
+                    + " tiene " + unitsInOrderOfAction.getLife() + "  vida");
         }
 
     }
